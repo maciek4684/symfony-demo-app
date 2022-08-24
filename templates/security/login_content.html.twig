@@ -1,0 +1,83 @@
+{% trans_default_domain 'security' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>RunCode - Log in!</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    <link href="https://v4-alpha.getbootstrap.com/examples/starter-template/starter-template.css" rel="stylesheet">
+
+    <link href="https://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="{{ asset('rc/css/signin.css') }}" media="all" type="text/css"  />
+
+
+</head>
+<body>
+
+{% if app.request.hasPreviousSession %}
+
+    {% for type, messages in app.session.flashbag.all() %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+{% endif %}
+
+
+<div class="container"> <!-- C1 -->
+
+    <form method="post" class="form-signin">
+        <h2 class="form-signin-heading">{{ 'security.login.submit'|trans }}</h2>
+        {% if error %}
+            <div class="alert alert-info">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+        <label for="inputEmail" class="sr-only">{{ 'security.login.username'|trans }}</label>
+        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="{{ 'security.login.username'|trans }}" value="{{ last_username }}" required="required" autofocus />
+
+        <label for="password" class="sr-only"> {{ 'security.login.password'|trans }}</label>
+        <input type="password" class="form-control" id="password" placeholder="{{ 'security.login.password'|trans }}" name="password" required="required" />
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="_remember_me" value="on" />&nbsp;{{ 'security.login.remember_me'|trans }}
+            </label>
+        </div>
+        <input type="submit" id="_submit" name="_submit" class="btn btn-lg btn-primary btn-block"  value="{{ 'security.login.submit'|trans }}" />
+    </form>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+{#            <a href="{{ path("app_forgot_password_request") }}">{{ 'resetting.request.submit'|trans }} &raquo;</a>#}
+        </div>
+    </div>
+    <div class="row" >
+{#        <div class="col text-center"><a href="{{path('homepage')}}">{{ 'layout.back_to_homepage'|trans }} &raquo;</a></div>#}
+    </div>
+</div>
+</body>
+</html>
+
