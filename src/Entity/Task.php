@@ -6,9 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Serializer\Annotation\Groups;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -42,27 +40,26 @@ class Task
      * @ORM\Column(type="integer")
      * @Groups({"list", "item"})
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"list", "item"})
      */
-    private $title;
+    private string $title;
 
     /**
      * @Gedmo\Mapping\Annotation\Slug(fields={"title"})
      * @ORM\Column(type="string", length=200, unique=true)
      */
-    private $slug;
+    private string $slug;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Length (min = 5 )
      * @Groups({"list", "item"})
      */
-    private $description;
-
+    private string $description;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TaskSubmit",
@@ -71,26 +68,17 @@ class Task
      *     fetch="LAZY")
      * @Groups({"item"})
      */
-    private $taskSubmits;
-
-    /**
-     * @return mixed
-     */
-    public function getTaskSubmits()
-    {
-        return $this->taskSubmits;
-    }
+    private Collection $taskSubmits;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\CodeLanguage", inversedBy="tasks")
      */
-    private $codeLanguages;
+    private Collection $codeLanguages;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\SubmitType", inversedBy="tasks")
      */
-    private $submitTypes;
-
+    private Collection $submitTypes;
 
     public function __construct()
     {
@@ -190,6 +178,14 @@ class Task
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|TaskSubmit[]
+     */
+    public function getTaskSubmits(): Collection
+    {
+        return $this->taskSubmits;
     }
 
 }

@@ -38,30 +38,29 @@ class CodeLanguage
      * @ORM\Column(type="integer")
      * @Groups({"list", "item"})
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=10)
      * @Groups({"list", "item"})
      */
-    private $shortName;
+    private string $shortName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"list", "item"})
      */
-    private $fullName;
+    private string $fullName;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Task", mappedBy="codeLanguages")
      * @Groups({"item"})
      */
-    private $tasks;
+    private Collection $tasks;
 
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
-
     }
 
     public function getId(): ?int

@@ -16,22 +16,22 @@ class SubmitType
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TaskSubmit", mappedBy="submitType")
      */
-    private $taskSubmits;
+    private Collection $taskSubmits;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Task", mappedBy="submitTypes")
      */
-    private $tasks;
+    private Collection $tasks;
 
     public function __construct()
     {

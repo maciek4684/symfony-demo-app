@@ -23,7 +23,7 @@ class AppUser implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -31,49 +31,46 @@ class AppUser implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank()
      * @Groups({"view_tasksubmit", "view_user", "view_exam_results"})
      */
-    private $email;
+    private string $email;
 
     /**
      * @Gedmo\Slug(fields={"email"})
      * @ORM\Column(type="string", length=200, unique=true)
      */
-    private $slug;
+    private string $slug;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
 
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $last_login;
+    private ?\DateTime $last_login;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TaskSubmit",
      *     mappedBy="user",
      *     cascade={"remove"})
      */
-    private $taskSubmits;
-
+    private Collection $taskSubmits;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ApiToken", mappedBy="user", orphanRemoval=true)
      */
-    private $apiTokens;
-
+    private Collection $apiTokens;
 
     public function __construct()
     {
         $this->taskSubmits = new ArrayCollection();
-        $this->tasks = new ArrayCollection();
         $this->apiTokens = new ArrayCollection();
     }
 
@@ -266,6 +263,4 @@ class AppUser implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-
 }

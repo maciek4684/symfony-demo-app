@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Dto\TaskSubmitInput;
+use App\Dto\TaskSubmitOutput;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -13,21 +16,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * })
  */
 
-
 #[ApiResource(
     collectionOperations: [
-        'get' => [
-            'normalization_context' => ['groups' => 'list']
+        "create" => [
+            "method" => "POST",
+            "input" => TaskSubmitInput::class,
+            "path"=> "/task_submits",
+            "messenger" => true,
+            "output" => TaskSubmitOutput::class,
+            "status" => 201
         ],
-        'post' =>[
-            'normalization_context' => ['groups' => 'list']
-        ]
     ],
     itemOperations: [
-        'get' =>
-            [
-                'normalization_context' => ['groups' => 'item']
-            ]
+        "get" => [
+            "output" => TaskSubmitOutput::class,
+         ],
     ],
     order: ['id' => 'ASC'],
     paginationEnabled: false,
@@ -40,130 +43,123 @@ class TaskSubmit
      * @ORM\Column(type="integer")
      * @Groups({"list", "item"})
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"list", "item"})
      */
-    private $fileContent;
+    private string $fileContent;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=6, nullable=true)
      * @Groups({"list", "item"})
      */
-    private $score;
+    private ?float $score;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"list", "item"})
      */
-    private $uploadDate;
+    private \DateTime $uploadDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"list", "item"})
      */
-    private $evaluationDate;
+    private \DateTime $evaluationDate;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"list", "item"})
      */
-    private $errorCount;
+    private int $errorCount;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"list", "item"})
      */
-    private $warningCount;
+    private int $warningCount;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"list", "item"})
      */
-    private $testCount;
+    private int $testCount;
 
     /**
      * @ORM\Column(type="json", nullable=true)
      * @Groups({"item"})
      */
-    private $errorList=[];
+    private ?array $errorList=[];
 
     /**
      * @ORM\Column(type="json", nullable=true)
      * @Groups({"item"})
      */
-    private $warningList=[];
+    private ?array $warningList=[];
 
     /**
      * @ORM\Column(type="json", nullable=true)
      * @Groups({"item"})
      */
-    private $testList = [];
+    private ?array $testList = [];
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=6, nullable=true)
      * @Groups({"item"})
      */
-    private $evaluationTime;
+    private float $evaluationTime;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $testServerId;
+    private string $testServerId;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AppUser", inversedBy="taskSubmits")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"item"})
      */
-    private $user;
+    private UserInterface $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="taskSubmits")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"item"})
      */
-    private $task;
+    private Task $task;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"list", "item"})
      */
-    private $evaluated;
+    private ?bool $evaluated;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $evaluatedBy;
+    private ?string $evaluatedBy = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SubmitType", inversedBy="taskSubmits")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $submitType;
+    private SubmitType $submitType;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\CodeLanguage")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"list", "item"})
      */
-    private $codeLanguage;
-
+    private CodeLanguage $codeLanguage;
 
     public function __construct()
-    {}
-
-    /**
-     * @Groups({"view_exam_results"})
-    */
-    public function getEmail()
     {
-        return $this->user->getEmail();
+        $this->setUploadDate(new \DateTime("now"));
+        $this->setErrorCount(0);
+        $this->setWarningCount(0);
+        $this->setTestCount(0);
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -282,14 +278,8 @@ class TaskSubmit
         return $this->testList;
     }
 
-    public function getTestListAsString()
-    {
-        return json_encode($this->testList, JSON_PRETTY_PRINT);
-    }
-
     public function setTestList(?array $testList): self
     {
-
         $this->testList = $testList;
 
         return $this;
@@ -343,58 +333,6 @@ class TaskSubmit
         return $this;
     }
 
-    public function getTestData(): string
-    {
-        return $this->getTask()->getTestData();
-    }
-
-    public function addToTestList($item)
-    {
-        $list = json_decode($this->testList);
-
-        array_push($list,
-            $item);
-        $this->setTestList( json_encode($list, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-    }
-
-    public function addToErrorList($item)
-    {
-        array_push($this->errorList,
-            $item);
-        $this->setErrorList($this->errorList);
-    }
-
-    public function addToWarningList($item)
-    {
-        $list = $this->getWarningList();
-
-        array_push($list,
-            $item);
-        $this->setWarningList($list);
-    }
-
-    public function initialize(string $content, Task $task, AppUser $user)
-    {
-        $this->uploadDate = new \DateTime("now");
-        $this->testCount = 0;
-        $this->errorCount = 0;
-        $this->warningCount = 0;
-        $this->submitType = $task->getSubmitTypes()[0];
-        $this->codeLanguage=$task->getCodeLanguages()[0];
-
-        $this->setScore(null);
-
-        $this->errorList = [];
-        $this->warningList = [];
-        $this->testList = [];
-        $this->setEvaluatedBy("[]");
-        $this->setFilecontent($content);
-
-        $this->setTask($task);
-        $this->setUser($user);
-
-    }
-
     public function getEvaluated(): ?bool
     {
         return $this->evaluated;
@@ -417,17 +355,6 @@ class TaskSubmit
         $this->evaluatedBy = $evaluatedBy;
 
         return $this;
-    }
-    public function addToEvaluatedBy($item)
-    {
-        $list = json_decode($this->evaluatedBy);
-
-        if (is_null($list))
-            $list = [];
-
-        array_push($list,
-            $item);
-        $this->setEvaluatedBy( json_encode($list, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
     }
 
     public function getSubmitType(): ?SubmitType
@@ -454,7 +381,7 @@ class TaskSubmit
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->id;
     }
