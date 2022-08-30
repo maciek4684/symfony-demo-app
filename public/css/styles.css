@@ -1,0 +1,279 @@
+
+
+/* The Modal (background) */
+
+.sidebar {
+    z-index: 0;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 99999999; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-backdrop {
+    z-index: 9999998 !important;
+}
+
+/* Modal Content */
+.modal-content {
+    z-index: 9999999 !important;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.breadcrumb {
+    margin: 25px;
+}
+
+ /* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 70px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 70px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 70px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 70px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+#tasklevel {
+    background-color: black;
+    border-radius: 13px;
+    /* (height of inner div) / 2 + padding */
+    padding: 3px;
+    vertical-align: middle;
+    margin: 10px;
+}
+
+#tasklevel>div {
+    background-color: #ffe355;
+    /* Adjust with JavaScript */
+    height: 15px;
+    border-radius: 10px;
+
+}
+.progress.active .progress-bar .progress-bar-score {
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
+.progress{
+    font-size: large;
+    height: 35px;
+}
+
+.submit-report
+{
+    height: 60px;
+}
+
+#editor {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.ace-highlight-error-line-2 {
+    background: #4a5d6d;
+    position: absolute;
+}
+
+.ace-highlight-error-line {
+    background: rgba(255, 50, 50, 0.3);
+    position: absolute;
+    width: 100% !important;
+    left: 0 !important;
+}
+
+/* Trophy gold, silver, bronze */
+.fas.trophy-1{
+    color: #fee101;
+    text-shadow: 0 0 1px #3e3333;
+}
+.fas.trophy-2{
+    color: #a7a7ad;
+    text-shadow: 0 0 1px #3e3333;
+}
+.fas.trophy-3{
+    color: #824a02;
+    text-shadow: 0 0 1px #3e3333;
+}
+.fas.trophy-inactive{
+    color: rgb(243, 243, 243);
+    text-shadow: 0 0 1px #c7b6b6;
+}
+.fas[data-count]{
+    position:relative;
+}
+.fas[data-count]:after{
+    position: absolute;
+    right: -0.2em;
+    content: attr(data-count);
+    padding-left: .01em;
+    margin-top: -0.1em;
+    color: white;
+    text-align: center;
+    min-width: 2em;
+    font: bold .7em sans-serif;
+}
+
+/*.fas[data-count]:after{*/
+/*    position: absolute;*/
+/*    right: -0.75em;*/
+/*    top: -.75em;*/
+/*    content: attr(data-count);*/
+/*    padding: .5em;*/
+/*    border-radius: 10em;*/
+/*    line-height: .9em;*/
+/*    color: white;*/
+/*    background: rgba(255,0,0,.75);*/
+/*    text-align: center;*/
+/*    min-width: 2em;*/
+/*    font: bold .4em sans-serif;*/
+/*}*/
+
+@media (min-width:992px) {
+    .desktop-only {
+        display:block !important;
+    }
+}
+@media (max-width: 991px) {
+    .mobile-only {
+        display:block !important;
+    }
+
+    .desktop-only {
+        display:none !important;
+    }
+}
+
+/* AJAX Spinner Styles */
+
+/*Hidden class for adding and removing*/
+.result-loader.hidden {
+    display: none;
+}
+.result-loader {
+    right: 75px;
+    margin-top: 5px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    z-index: 100;
+}
+.result-loader:after {
+    content: " ";
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 90%;
+    border: 8px solid #cb9b23;
+    border-color: #f0f80d transparent #ffffff transparent;
+    animation: result-loader 1.2s linear infinite;
+}
+@keyframes result-loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.result-container{
+    position: absolute;
+    margin: 10px;
+    display: inline-block;
+    z-index: 10;
+}
+.result-container-1{
+    position: sticky;
+    margin: 7px;
+    display: inline-block;
+    border-color: rgba(27, 194, 45, 0.8);
+    background-color: rgba(27, 194, 45, 0.1);
+    border-width: thin;
+    border-style: solid;
+}
+.result-container-0{
+    position: sticky;
+    margin: 7px;
+    display: inline-block;
+    border-color: rgba(173,35,86,0.8);
+    background-color: rgba(173,35,86,0.1);;
+    border-width: thin;
+    border-style: solid;
+}
+
+.result-content{
+    margin: 5px;
+}
+
+.bg-danger {
+    color: #05171a;
+}
+
