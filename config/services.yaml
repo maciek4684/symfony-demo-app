@@ -19,6 +19,28 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
+    App\EventListener\AppLocaleListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 20 }
 
+    # register the TaskEvaluatorCompilerPass in Kernel first
+    App\Strategy\ProgrammingLanguageStrategy\CodeStrategy:
+        tags:
+            - { name: submit_strategy, priority: 10 }
+
+    App\Strategy\ProgrammingLanguageStrategy\DockerStrategy:
+        tags:
+            - { name: submit_strategy, priority: 15 }
+    App\Strategy\ProgrammingLanguageStrategy\ForbiddenStatementStrategy:
+        tags:
+            - { name: submit_strategy, priority: 5 }
+    App\Strategy\ProgrammingLanguageStrategy\PenaltyStatementStrategy:
+        tags:
+            - { name: submit_strategy, priority: 30 }
+
+    
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    'App\DataTransformer\TaskSubmitInputDataTransformer': ~
+

@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 
-class ApiTokenAuthenticator extends AbstractAuthenticator
+final class ApiTokenAuthenticator extends AbstractAuthenticator
 {
     private ApiTokenRepository $apiTokenRepository;
 
@@ -69,7 +69,7 @@ class ApiTokenAuthenticator extends AbstractAuthenticator
     {
         return new JsonResponse([
             'message' => $exception->getMessageKey()
-        ], 401);
+        ], 403);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) : ?Response
