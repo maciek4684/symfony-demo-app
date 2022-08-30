@@ -2,21 +2,25 @@
 
 namespace App\Controller\EasyAdmin;
 
-use App\Entity\Task;
+use App\Entity\TaskSubmit;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-final class TaskCrudController extends AbstractCrudController
+final class TaskSubmitCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Task::class;
+        return TaskSubmit::class;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -35,14 +39,18 @@ final class TaskCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add('title');
+            ->add('id');
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('title');
-        yield TextEditorField::new('description');
-        yield AssociationField::new('codeLanguages');
-        yield AssociationField::new('submitTypes');
+        yield TextareaField::new('fileContent');
+        yield NumberField::new('score');
+        yield TextAreaField::new('evaluatedBy');
+        yield DateTimeField::new('uploadDate');
+        yield AssociationField::new('task');
+        yield AssociationField::new('user');
+        yield AssociationField::new('submitType');
+        yield BooleanField::new('evaluated');
     }
 }

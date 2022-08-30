@@ -10,7 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class CodeLanguageCrudController extends AbstractCrudController
+final class CodeLanguageCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
