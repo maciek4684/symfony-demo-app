@@ -100,9 +100,11 @@ class AppUser implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->slug;
     }
-    public function setSlug(?string $slug): void
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**

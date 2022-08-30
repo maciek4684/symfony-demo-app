@@ -8,6 +8,7 @@ use App\Dto\TaskSubmitOutput;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskSubmitRepository")
@@ -124,9 +125,9 @@ class TaskSubmit
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="taskSubmits")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private Task $task;
+    private ?Task $task;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -332,6 +333,7 @@ class TaskSubmit
 
         return $this;
     }
+
 
     public function getEvaluated(): ?bool
     {
