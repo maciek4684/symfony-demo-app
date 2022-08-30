@@ -2,14 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecurityController extends AbstractController
+final class SecurityController extends AbstractController
 {
+    private $requestStack;
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
     /**
      * @Route("/login", name="app_login")
      */
@@ -17,7 +23,7 @@ class SecurityController extends AbstractController
     {
         if ($this->getUser())
         {
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('default');
         }
 
         // get the login error if there is one
@@ -25,7 +31,12 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login_content.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        $message = $this->requestStack->getSession()->get('info');
+
+        return $this->render('security/login_content.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'message' => $message]);
     }
 
     /**
