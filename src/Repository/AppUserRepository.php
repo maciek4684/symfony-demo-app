@@ -7,7 +7,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 
@@ -40,7 +39,7 @@ class AppUserRepository extends ServiceEntityRepository implements PasswordUpgra
       * @return AppUser[] Returns an array of AppUser objects
       */
 
-    public function findAll()
+    public function findAll(): array
     {
         return $this->createQueryBuilder('u')
             ->getQuery()

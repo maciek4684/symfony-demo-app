@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\TaskSubmit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Query\ResultSetMapping as ResultSetMapping;
 
 /**
  * @method TaskSubmit|null find($id, $lockMode = null, $lockVersion = null)
