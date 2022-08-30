@@ -11,6 +11,7 @@ services:
     restart: unless-stopped
     volumes:
       - php_socket:/var/run/php
+      - ./:/srv/app
     healthcheck:
       interval: 10s
       timeout: 3s
@@ -70,14 +71,9 @@ services:
       POSTGRES_PASSWORD: DemoP@ssw0rd # The PostgreSQL password (useful to connect to the database)
       POSTGRES_DB: demo-db # The PostgreSQL default database (automatically created at first launch)  
 
-# Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
-
 volumes:
   php_socket:
   caddy_data:
   caddy_config:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
-
