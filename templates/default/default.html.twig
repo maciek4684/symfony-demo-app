@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+
+            <h1 class="display-4">{{ 'app.name' | trans }}</h1>
+            <p class="lead">{{ 'app.description' | trans }}</p>
+
+             <p class="lead">{{ 'task.progress' | trans }}: &nbsp;&nbsp;
+                <span style="white-space: nowrap;">
+                <i class="fas fa-tasks" style="color: #0d5aa7;" data-toggle="tooltip" data-placement="top" title="{{ 'task.total' | trans }}"></i> 23  &nbsp;
+                <i class="fas fa-check-square" style="color: #1ea471;" data-toggle="tooltip" data-placement="top" title="{{ 'task.solved' | trans }}"></i> 21&nbsp;&nbsp;
+                <i class="fas fa-cloud-upload-alt" style="color: #e10098;" data-toggle="tooltip" data-placement="top" title="{{ 'task.submitted' | trans }}"></i> 57 &nbsp;
+                <i class="fas fa-medal trophy-1" data-toggle="tooltip" data-placement="top" title="{{ 'task.achievements' | trans }}"></i> 7&nbsp;&nbsp;
+                <i class="fas fa-chart-line" style="color: #3a4443;" data-toggle="tooltip" data-placement="top" title="{{ 'task.rating_points' | trans }}"></i> 2123.12 &nbsp;
+                <i class="fas fa-arrow-alt-circle-up" style="color: #1659bb;" data-toggle="tooltip" data-placement="top" title="{{ 'task.level' | trans }}"></i> 7 &nbsp;
+            </span>
+            </p>
+        </div>
+    </div>
+
+    {% for type, messages in app.session.flashbag.all() %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <div class="row" style="margin-top: 55px; margin-bottom: 25px;">
+        <div class="col">
+            <h2>{{ 'task.select' | trans }}</h2>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+
+            {% for task in tasks %}
+                <tr class="submit-report">
+                    <td class="align-middle">
+                        <h3>
+                            {% set tries = random([1, 2, 3]) %}
+                            <i class="fas fa-solid fa-trophy trophy-{{ tries }}" data-count="{{ tries }}" data-toggle="tooltip" data-placement="right" title="You solved this task task in {{ tries }} attempt"></i>&nbsp;
+                        </h3>
+                    </td>
+                    <td class="align-middle">
+                        <a class="nav-link" href="{{ path('submit_solution', {taskSlug: task.slug})}}">
+                            <h4>{{task.title}}</h4></a>
+                    </td>
+                    <td class="align-middle" width="50%">
+                        <div class="progress">
+                            <div class="progress-bar {% if task.score == 1 %} bg-success {% elseif task.score < 0.5 %} bg-danger {% else %} bg-warning {% endif %}" role="progressbar" style="width: {{100*task.score|slice(0,4)}}%" aria-valuenow="{{100*task.score|slice(0,4)}}" aria-valuemin="0" aria-valuemax="100">{{100*task.score|slice(0,4)}}%</div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div><!-- end table -->
+{% endblock %}
+
+{% block  javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+{% endblock %}

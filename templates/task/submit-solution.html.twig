@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} | {{task.title}} - submit solution{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("vendor/font-awesome-5.15/css/all.css") }}" media="all" type="text/css">
+    <script src="{{ asset('/ace/src/ace.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div id="main" class="container-fluid">
+
+    <nav style="--bs-breadcrumb-divider: '&raquo';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="nav-link active mx-2" href="{{ path('default') }}">{{ 'menu.home' | trans }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{task.title}}</li>
+    </ol>
+    </nav>
+
+    <div class="row">
+
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+
+    <div class="row">
+
+        <div class="col-xl-6 col-lg-6 col-md-8 col-sm-8 col-xs-8">
+            <div class="row" style="height: 400px;">
+                <div class="col">
+                    <div id="editor" style="height: 400px;">using System;
+
+namespace TestMyCode
+{
+    class Program
+    {
+        static int? ReturnMax(int[] arr)
+        {
+            if (arr == null)
+                return null;
+
+            if (arr.Length == 0)
+                return null;
+
+            int max = arr[0];
+                for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] > max)
+                max = arr[i];
+            }
+            return max;
+        }
+        static void Main(string[] args)
+        {
+            int[] A1 = { 6, 2, 1, 9, 3};
+
+            Console.WriteLine(ReturnMax(A1));
+
+            Console.ReadKey();
+        }
+    }
+}
+                    </div>
+                </div>
+                <div id="send-data-container" class="result-container">
+                    <button id="submit-code-button" class="btn btn-primary btn-md btn-block sr-button">
+                        <i class="fa fa-play"></i>
+                    </button>
+                    <div id="loader" class="result-loader hidden"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div id="submitResult" class="result-list"></div>
+                    <div id="errorList" class="result-list"></div>
+                    <div id="resultList" class="result-list"></div>
+                    <div id="accordion" class="accordion"></div>
+
+                </div>
+            </div>
+
+        </div>
+      <div class="col-xl-6 col-lg-6 col-md-4 col-sm-4 col-xs-4">
+
+         <div class="pt-3">
+            <h2>
+                {{task.title}}
+             </h2>
+             <hr width="80%">
+            <p class="text-lg-left">{{task.description | raw}} </p>
+            <hr width="80%">
+        </div>
+
+    </div>
+</div>
+
+<div class="row" style="margin-top: 25px;">
+  <div class="col">
+      <h4>{{ 'submit.last_scores' | trans }}</h4>
+  </div>
+</div>
+
+  <div class="table-responsive">
+      <table class="table table-hover">
+          <thead>
+          <tr>
+              <th width="20%"></th>
+              <th width="10%"></th>
+              <th></th>
+          </tr>
+          </thead>
+          <tbody>
+
+      {% for submit in submits %}
+              <tr class="submit-report {% if submit.score is null %} table-danger
+              {% elseif submit.score == 1 %} table-success
+              {% elseif submit.score < 0.5 %} table-danger
+              {% else %} table-warning
+              {% endif %}" >
+                  <td class="align-middle">
+                      {{submit.uploadDate|date('Y-m-d H:i:s') }}
+                  </td>
+                  <td class="align-middle">
+                      <code>{{submit.codeLanguage.fullName }}</code>
+                  </td>
+                  <td class="align-middle">
+                      <div class="progress">
+                          <div class="progress-bar {% if submit.score is null %} bg-danger
+                        {% elseif submit.score == 1 %} bg-success
+                        {% elseif submit.score < 0.5 %} bg-danger
+                        {% else %} bg-warning
+                        {% endif %} " role="progressbar" style="width: {% if submit.score is null %}0{% else%}{{100*submit.score|slice(0,4)}}{% endif %}%" aria-valuenow="{% if submit.score is null %}0{% else%}{{100*submit.score|slice(0,4) }}{% endif %}" aria-valuemin="0" aria-valuemax="100">{% if submit.score is null %}0{% else%}{{100*submit.score|slice(0,4)}}{% endif %}%</div>
+                      </div>
+                  </td>
+              </tr>
+      {% else %}
+          <div class="alert alert-info alert-no-submissions" >{{ 'submit.no_submissions' | trans }}</div>
+      {% endfor %}
+          </tbody>
+      </table> <!-- end table -->
+  </div><!-- end table div -->
+</div>
+    </div>
+</div>
+
+<div id="snackbar"></div>
+<div class="js-app-data"
+     data-task-id="{{ task.id }}"
+     data-label-your-score="{{ 'submit.your_score' | trans  }}"
+     data-label-request-failed="{{ 'submit.request_failed' | trans  }}"
+     data-label-unit-test-report="{{ 'submit.unit_test_report' | trans  }}"
+     data-label-test="{{ 'submit.test' | trans  }}"
+     data-label-function="{{ 'submit.function' | trans  }}"
+     data-label-executed="{{ 'submit.executed' | trans  }}"
+     data-label-expected="{{ 'submit.expected' | trans  }}"
+     data-label-errors="{{ 'submit.errors' | trans  }}"
+     data-label-error-id="{{ 'submit.error_id' | trans  }}"
+     data-label-error-line="{{ 'submit.error_line' | trans  }}"
+     data-label-error-type="{{ 'submit.error_type' | trans  }}"
+     data-label-error-message="{{ 'submit.error_message' | trans  }}"
+     data-label-execution-error="{{ 'submit.execution_error' | trans  }}"
+     data-label-execution-error-message="{{ 'submit.execution_error_message' | trans  }}"
+>
+</div>
+{% endblock %}
+
+{% block  javascripts %}
+{#    {{ include('task/_script_handle_api_response.html.twig') }}#}
+    <script src="{{ asset('/js/script.js') }}"></script>
+{% endblock %}
