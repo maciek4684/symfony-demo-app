@@ -1,0 +1,81 @@
+security:
+  login:
+    login: 'Anmelden'
+    username: 'Email'
+    password: 'Passwort'
+    remember_me: 'Angemeldet bleiben'
+    submit: 'Einloggen'
+change_password:
+  submit: 'Passwort ändern'
+  flash:
+    success: 'Das Passwort wurde geändert'
+registration:
+  check_email: 'Na adres %email% wysłano wiadomość e-mail. Zawiera ona link, na który należy kliknąć, aby aktywować konto.'
+  confirmed: 'Gratulacje %username%, potwierdziłeś konto.'
+  back: 'Zurück zur Startseite'
+  submit: 'Registrieren'
+  flash:
+    user_created: 'Benutzer hergestellt.'
+  email:
+    subject: 'Hallo %username%!'
+    message: |
+      Hallo %username%!
+
+      Aby potwierdzić swoje konto - proszę przejść do %confirmationUrl%
+
+resetting:
+  check_email: |
+    Die Nachricht wurde an Ihre E-Mail-Adresse geschickt.
+    In ihr werden Sie aufgefordert, auf den angegebenen Link zu klicken, um die Änderung zu bestätigen
+    Sie können das Passwort nur einmal pro %tokenLifetime% Stunden ändern.
+
+    Wenn Sie die Nachricht nicht erhalten haben, überprüfen Sie
+    die Anti-Spam-Einstellungen und die Spam-Ordner.
+
+  request:
+    username: 'Email'
+    submit: 'Passwort zurücksetzen'
+    info: 'This email will be used to send a message with a resetting link. '
+    sent: 'The message has been sent. Check your email box. '
+    valid: 'The link is valid'
+    hours: 'hours'
+    not_received: 'If you will not receive our message, please check your spam folder or '
+    try_again: 'try again'
+  reset:
+    submit: 'Passwort ändern'
+  flash:
+    success: 'Das Passwort wurde geändert'
+  email:
+    subject: 'CloudCode - Passwort zurücksetzen'
+    line1: 'Somebody (probably you) requested to reset your CloudCode password.'
+    line2: 'To reset the password'
+    line3: 'If you do not want to reset password, ignore this message.'
+    line4: 'Best regards, CloudCode Team'
+    click_here: 'click here'
+    message: |
+      Hallo %username%!
+
+      Um ein neues Passwort einzustellen, klicken Sie bitte: %confirmationUrl%
+
+      Mit freundlichen Grüßen,
+      CloudCode
+
+layout:
+  logout: 'Ausloggen'
+  login: 'Einloggen'
+  register: 'Zarejestruj'
+  logged_in_as: 'Zalogowano jako %username%'
+  back_to_homepage: 'Zurück zur Startseite'
+form:
+  group_name: 'Nazwa grupy'
+  username: 'Email'
+  email: 'Email'
+  current_password: 'Derzeitiges Passwort'
+  password: 'Passwort'
+  enter_password: 'Geben Sie das Passwort ein'
+  password_confirmation: 'Wiederhole das Passwort'
+  new_password: 'Neues Passwort'
+  new_password_confirmation: 'Wiederhole das Passwort'
+resetting_form:
+  new_password: 'New password'
+  new_password_confirmation: 'Repeat new password'

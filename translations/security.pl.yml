@@ -1,0 +1,82 @@
+security:
+  login:
+    login: 'Zaloguj się'
+    username: 'Email'
+    password: 'Hasło'
+    remember_me: 'Nie wylogowuj mnie'
+    submit: 'Zaloguj'
+change_password:
+  submit: 'Zmień hasło'
+  flash:
+    success: 'Hasło zostało zmienione.'
+registration:
+  check_email: 'Na adres %email% wysłano wiadomość e-mail. Zawiera ona link, na który należy kliknąć, aby aktywować konto.'
+  confirmed: 'Gratulacje %username%, potwierdziłeś konto.'
+  back: 'Powrót do poprzedniej strony.'
+  submit: Zarejestruj
+  flash:
+    user_created: 'Stworzono użytkownika.'
+  email:
+    subject: 'Witaj %username%!'
+    message: |
+      Cześć %username%!
+
+      Aby potwierdzić swoje konto - proszę przejść do %confirmationUrl%
+
+resetting:
+  check_email: |
+    E-mail został wysłany.... Zawiera on link do formularza zmiany hasła.
+    Uwaga: Możesz zresetować hasło tylko jeden raz w ciągu %tokenLifetime% godzin.
+
+    Sprawdź swoją skrzynkę pocztową, jeśli jednak nie widzisz wiadomości od nas, sprawdź folder spam lub spróbuj ponownie później.
+
+  request:
+    username: 'Nazwa użytkownika lub e-mail'
+    submit: 'Resetuj hasło'
+    info: 'Na podany adres email zostanie wysłana wiadomość z linkiem umożliwiającym zreserowanie hasła. '
+    sent: 'Na podany adres email została wysłana wiadomość z linkiem umożliwiającym zresetowanie hasła. '
+    valid: 'Okres ważności linka'
+    hours: 'godziny'
+    not_received: 'Jeśli nie otrzymasz wiadomości, sprawdź folder spam lub'
+    try_again: 'spróbuj ponownie'
+  reset:
+    submit: 'Zmień hasło'
+  flash:
+    success: 'Hasło zostało zresetowane.'
+  email:
+    subject: 'Resetowanie hasła'
+    line1: 'Ktoś (prawdopodobnie Ty) uruchomił proces ustawiania nowego hasła w serwisie %app_name%.'
+    line2: 'Aby zresetować hasło'
+    line3: 'Jeśli nie chcesz resetować hasła, zignoruj tę wiadomość.'
+    line4: 'Pozdrawiamy, Zespół %app_name%'
+    click_here: 'kliknij tutaj'
+    message: |
+      Cześć %username%!
+
+      Ktoś (prawdopodobnie Ty) uruchomił proces ustawiania nowego hasła w serwisie RunCode.
+
+      Aby zresetować hasło - należy przejść do %confirmationUrl%
+
+      Jeśli nie chcesz resetować hasła, zignoruj tę wiadomość.
+
+layout:
+  logout: Wyloguj
+  login: Zaloguj
+  register: Zarejestruj
+  logged_in_as: 'Zalogowano jako %username%'
+  back_to_homepage: 'Powrót do strony głównej'
+form:
+  group_name: 'Nazwa grupy'
+  username: 'Nazwa użytkownika'
+  email: 'E-mail'
+  current_password: 'Obecne hasło'
+  password: 'Hasło'
+  enter_password: 'Podaj hasło'
+  password_confirmation: 'Powtórz hasło'
+  new_password: 'Nowe hasło'
+  new_password_confirmation: 'Powtórz hasło'
+  passwords_equal: 'Hasła muszą być takie same'
+  min_length: 'Minimalna długość hasła'
+resetting_form:
+  new_password: 'Nowe hasło'
+  new_password_confirmation: 'Powtórz nowe hasło'

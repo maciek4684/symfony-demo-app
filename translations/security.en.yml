@@ -1,0 +1,80 @@
+security:
+  login:
+    login: 'Log in'
+    username: 'Email'
+    password: 'Password'
+    remember_me: 'Remember me'
+    submit: 'Submit'
+change_password:
+  submit: 'Change password'
+  flash:
+    success: 'Password has been changed'
+registration:
+  check_email: '%email% - the message has been sent'
+  confirmed: 'Congratulations %username%, your account has been confirmed.'
+  back: 'Back to the homepage'
+  submit: 'Sign up'
+  flash:
+    user_created: 'User created.'
+  email:
+    subject: 'Hello %username%!'
+    message: |
+      Hello %username%!
+
+      To confirm your email, please click this link %confirmationUrl%
+
+resetting:
+  check_email: |
+    Please check your inbox, the email has been sent.
+    If you want to change the password, click the link provided in the email.
+    You can change the password one time within %tokenLifetime% hour(s).
+
+    If you didn't receive the email, please check the Spam folder.
+
+  request:
+    username: 'Email'
+    submit: 'Reset password'
+    info: 'This email will be used to send a message with a resetting link. '
+    sent: 'The message has been sent. Check your email box. '
+    valid: 'The link is valid'
+    hours: 'hours'
+    not_received: 'If you will not receive our message, please check your spam folder or '
+    try_again: 'try again'
+  reset:
+    submit: 'Change password'
+  flash:
+    success: 'Password has been changed'
+  email:
+    subject: 'TestMyCode - Change password request'
+    line1: 'Somebody (probably you) requested to reset your password.'
+    line2: 'To reset the password'
+    line3: 'If you do not want to reset password, ignore this message.'
+    line4: 'Best regards, TestMyCode Team'
+    click_here: 'click here'
+    message: |
+      Hello %username%!
+
+      If you want to proceed with the process of changing password, click here: %confirmationUrl%
+
+      Best regards
+      TestMyCode
+
+layout:
+  logout: 'Logout'
+  login: 'Login'
+  register: 'Register'
+  logged_in_as: 'Logged in as %username%'
+  back_to_homepage: 'Back to homepage'
+form:
+  group_name: 'Group name'
+  username: 'Email'
+  email: 'Email'
+  current_password: 'Current password'
+  password: 'Password'
+  enter_password: 'Please enter the password'
+  password_confirmation: 'Repeat password'
+  new_password: 'New password'
+  new_password_confirmation: 'Repeat new password'
+resetting_form:
+  new_password: 'New password'
+  new_password_confirmation: 'Repeat new password'
