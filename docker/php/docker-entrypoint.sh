@@ -6,6 +6,9 @@ if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"
 fi
 
+setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX bin
+chmod +x bin/console
+
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	# Install the project the first time PHP is started
 	# After the installation, the following block can be deleted
@@ -54,9 +57,13 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			echo "The db is now ready and reachable"
 		fi
 
-		if [ "$( find ./migrations -iname '*.php' -print -quit )" ]; then
-			bin/console doctrine:migrations:migrate --no-interaction
-		fi
+		echo "executing bin/console doctrine:migrations:diff"
+		php bin/console doctrine:migrations:diff --no-interaction
+		echo "executing doctrine:migrations:migrate"
+		php bin/console doctrine:migrations:migrate --no-interaction
+		echo "executing doctrine:fixtures:load"
+		php bin/console doctrine:fixtures:load --no-interaction
+
 	fi
 
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
