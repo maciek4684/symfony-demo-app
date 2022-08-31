@@ -10,7 +10,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class SecurityController extends AbstractController
 {
-    private $requestStack;
+    private RequestStack $requestStack;
+
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
@@ -21,6 +22,7 @@ final class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+
         if ($this->getUser())
         {
             return $this->redirectToRoute('default');
